@@ -17,7 +17,7 @@ def find_seat(data):
     
     for string in data:
         row = string[:6]
-        column = string[7:]
+        column = string[7:9]
 
         row_bound_low = 0
         row_bound_up = 127
@@ -29,7 +29,7 @@ def find_seat(data):
 
                 row_bound_low = row_bound_low + round(((row_bound_up - row_bound_low) / 2))
 
-
+            # print(row_bound_low,row_bound_up)
         column_bound_low = 0
         column_bound_up = 7
         for i in column:
@@ -38,7 +38,7 @@ def find_seat(data):
             else:
 
                 column_bound_low = column_bound_low + round(((column_bound_up - column_bound_low) / 2))
-
+            # print(column_bound_low,column_bound_up)
         if string[7] == "B":
             row = row_bound_up
         else:
@@ -49,14 +49,12 @@ def find_seat(data):
         else:
             column = column_bound_low
 
+        # print(row,column)
+        # print("*****************")
         seat_list.append(row*8+column)
     
     
-    high = 0
-    for i in seat_list:
-        if i >= high :
-        	high = i
-    print(high)
+    print(max(seat_list))
         
     
     
