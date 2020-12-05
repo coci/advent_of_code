@@ -13,47 +13,52 @@ moves = {
 
 def find_seat(data):
 
-	seat_list = []
+    seat_list = []
+    
+    for string in data:
+        row = string[:6]
+        column = string[7:]
 
-	for string in data:
-		row = string[:7]
-		column = string[7:]
+        row_bound_low = 0
+        row_bound_up = 127
+        for i in row :
+            if moves[i] == 'l':
+                row_bound_up = row_bound_up - round(((row_bound_up - row_bound_low) / 2 ))
 
-		row_bound_low = 0
-		row_bound_up = 127
-		for i in row :
-			if moves[i] == 'l':
-				row_bound_up = row_bound_up - round(((row_bound_up - row_bound_low) / 2 ))
+            else:
 
-			else:
-				row_bound_low = row_bound_low + round(((row_bound_up - row_bound_low) / 2))
-		
-		column_bound_low = 0
-		column_bound_up = 7
-		for i in column:
-			if moves[i] == 'l':
-				column_bound_up = column_bound_up - round(((column_bound_up - column_bound_low) // 2))
-			else:
-
-				column_bound_low = column_bound_low + round(((column_bound_up - column_bound_low) / 2))
-
-		if row[-1] == "B":
-			row = row_bound_up
-		else:
-			row = row_bound_low
+                row_bound_low = row_bound_low + round(((row_bound_up - row_bound_low) / 2))
 
 
-		if column[-1] == "R":
-			column = column_bound_up
-		else:
-			column = column_bound_low
+        column_bound_low = 0
+        column_bound_up = 7
+        for i in column:
+            if moves[i] == 'l':
+                column_bound_up = column_bound_up - round(((column_bound_up - column_bound_low) / 2))
+            else:
 
-		seat_list.append(row_bound_low*8 + column)
+                column_bound_low = column_bound_low + round(((column_bound_up - column_bound_low) / 2))
 
-	high = 0
-	for i in seat_list:
-		if i > high :
-			high = i
-	print(high)
+        if string[7] == "B":
+            row = row_bound_up
+        else:
+            row = row_bound_low
 
+        if string[-1] == "R":
+            column = column_bound_up
+        else:
+            column = column_bound_low
+
+        seat_list.append(row*8+column)
+    
+    
+    high = 0
+    for i in seat_list:
+        if i >= high :
+        	high = i
+    print(high)
+        
+    
+    
+    
 find_seat(data)
